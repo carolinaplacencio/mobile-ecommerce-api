@@ -39,19 +39,17 @@ public class ProductController {
 	public ResponseEntity<List<Product>> getProductList(){
 		List<Product> products = this.productService.findAll();	    
 	    return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
-		//return this.productService.findAll();		
 	}
 	
 	@GetMapping("/products/{id}")
  	@ApiOperation(value="Return the product that has the requested id")
-	public ResponseEntity<Product> getProductById(@PathVariable(value="id") long id){
-		Optional<Product> products = productService.findById(id);
+	public ResponseEntity<Product> getProductById(@PathVariable(value="id") String id){	
+		Optional<Product> products = productService.findById(Long.parseLong(id));
 	    if(products.isPresent()){
 	        Product product = products.get();
 	        return new ResponseEntity<>(product, HttpStatus.OK);
 	    }
 	    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		//return this.productService.findById(id).orElse(null);
 	}
 		
 	@PostMapping("/cart")
@@ -59,7 +57,6 @@ public class ProductController {
 	public ResponseEntity<Long> countCart(ShoppingCart shoppingCart){
 		this.shoppingCartService.save(shoppingCart);    
 	    return new ResponseEntity<>(shoppingCartService.countShoppingCart(), HttpStatus.OK);
-        //return shoppingCartService.countShoppingCart();
     }
 
 }
