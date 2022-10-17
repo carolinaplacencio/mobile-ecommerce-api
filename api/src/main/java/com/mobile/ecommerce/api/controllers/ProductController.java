@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,7 +55,7 @@ public class ProductController {
 		
 	@PostMapping("/cart")
 	@ApiOperation(value="Save and returns the number of items in the cart")
-	public ResponseEntity<Long> countCart(ShoppingCart shoppingCart){
+	public ResponseEntity<Long> countCart(@RequestBody ShoppingCart shoppingCart){
 		this.shoppingCartService.save(shoppingCart);    
 	    return new ResponseEntity<>(shoppingCartService.countShoppingCart(), HttpStatus.OK);
     }
